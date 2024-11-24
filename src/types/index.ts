@@ -37,3 +37,28 @@ export interface PaginatedResponse<T> {
   };
   data: T[];
 }
+
+export interface Executor {
+  id: string;
+  fullName: string;
+  sum: string;
+  reason: string;
+  comment: string;
+  files: FileWithComment[];
+}
+
+export interface FileWithComment {
+  file: File;
+  comment: string;
+  tempId: string;
+  executorId: string;
+}
+
+export interface ExecutorFormData {
+  fullName: string;
+  sum: string;
+  reason: string;
+  date: string;
+  objectId: string;
+  executors: Executor[];
+}

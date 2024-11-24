@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings, Bell, Plus, Upload, ChevronRight } from 'lucide-react';
+import { Settings, Bell, Plus, Upload, ChevronRight, FilePlus  } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Navigation() {
@@ -26,9 +26,9 @@ export default function Navigation() {
         
         <button
           onClick={() => navigate(isDetailPage ? '#upload' : '/new')}
-          className="p-2 text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-500"
+          className="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500"
         >
-          {isDetailPage ? <Upload className="w-6 h-6" /> : <Plus className="w-6 h-6" />}
+          {isDetailPage ? <Upload className="w-6 h-6" /> : <FilePlus className="w-6 h-6" />}
         </button>
       </div>
     </div>

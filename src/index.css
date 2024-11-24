@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 body * {
-  @apply transition-colors duration-1000;
+    @apply transition-colors duration-300;
+}
+
+body *:hover {
+    @apply duration-100;
 }

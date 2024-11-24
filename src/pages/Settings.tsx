@@ -3,6 +3,8 @@ import {ArrowLeft, Moon, Sun, Bell, Lock, ChevronRight, ChevronDown, PersonStand
 import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import { useTheme } from '../context/ThemeContext';
+import {useAuth} from "../context/AuthProvider";
+import { useRole } from '../context/RoleContext';
 
 interface SettingToggleProps {
   icon: React.ReactNode;
@@ -37,6 +39,17 @@ export default function Settings() {
   const { darkMode, toggleDarkMode } = useTheme();
   const [notifications, setNotifications] = useState(true);
   const [isFewRoles, setIsFewRoles] = useState(true);
+  const { user } = useAuth();
+  const { role, setRole } = useRole();
+
+  // Формируем список ролей
+  const roles = [];
+  if (user) {
+    if (user.is_foreman) roles.push({ value: 'Бригадир', label: 'Бригадир' });
+    if (user.is_commandant) roles.push({ value: 'Комендант', label: 'Комендант' });
+    if (user.is_accountant) roles.push({ value: 'Табельщица', label: 'Табельщица' });
+    if (user.is_manager) roles.push({ value: 'Менеджер', label: 'Менеджер' });
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -60,12 +73,22 @@ export default function Settings() {
                 <PersonStanding className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                 <span className="text-gray-900 dark:text-white ml-3">Моя роль</span>
               </div>
-              <div className="flex items-center  bg-gray-200 rounded px-2 py-1 ml-3 dark:bg-gray-600 text-gray-300">
-                <span className="text-gray-900 dark:text-gray-300">Бригадир</span>
+                {/*<span className="text-gray-900 dark:text-gray-300">{roles.find(role => role.value === selectedRole)?.label || 'Нет роли'}</span>
                 {isFewRoles && (
                     <ChevronDown className="w-5 h-5 text-gray-400 ml-1" />
-                )}
-              </div>
+                )}*/}
+              <select
+                  value={role || ''}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="ml-3 bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-gray-300 rounded px-2 py-1 cursor-pointer"
+              >
+                {!role && <option value="">Выберите роль</option>}
+                {roles.map(role => (
+                    <option key={role.value} value={role.value}>
+                      {role.label}
+                    </option>
+                ))}
+              </select>
             </div>
 
             <hr className="border-gray-200 dark:border-gray-700" />
